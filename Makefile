@@ -1,11 +1,18 @@
 CC=gcc
-CFLAGS=-O0 -g -std=c99 -Wall -Werror -Wextra -pedantic
+CFLAGS=-O0 -std=c99 -Wall -Werror -Wextra -pedantic
+BUILD=build
+BINS=main calc calc_adv
 
-all: main calc calc_adv
+all: $(BINS)
 
-%: %.o
+%: $(BUILD)/%.o
 	$(CC) $(CFLAGS) -o $@ $^
 
-%.o: src/%.c
+$(BUILD)/%.o: src/%.c | $(BUILD)
 	$(CC) $(CFLAGS) -c -o $@ $^
 
+$(BUILD):
+	mkdir -p build
+
+clean:
+	rm $(BINS)
