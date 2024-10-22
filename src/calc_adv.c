@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-bool read(const char* message, int *x) {
+static bool read(const char* message, int *x) {
   printf("%s", message);
   int res = scanf("%d", x);
   switch (res) {
@@ -13,6 +13,8 @@ bool read(const char* message, int *x) {
       fprintf(stderr, "invalid number\n");
       return false;
   }
+
+  fflush(stdout);
   return true;
 }
 
@@ -29,6 +31,7 @@ int main(void) {
       fprintf(stderr, "encountered end-of-file\n");
       return 1;
     }
+    printf(" ------- %c", op);
 
     if (!strchr("+-/*", op)) {
       fprintf(stderr, "invalid operation: %c %d\n", op, op);
