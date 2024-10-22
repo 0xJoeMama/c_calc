@@ -1,17 +1,17 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
-static bool read(const char* message, int *x) {
+static bool read(const char *message, int *x) {
   printf("%s", message);
   int res = scanf("%d", x);
   switch (res) {
-    case EOF:
-      fprintf(stderr, "encountered eof\n");
-      return false;
-    case 0:
-      fprintf(stderr, "invalid number\n");
-      return false;
+  case EOF:
+    fprintf(stderr, "encountered eof\n");
+    return false;
+  case 0:
+    fprintf(stderr, "invalid number\n");
+    return false;
   }
 
   fflush(stdout);
@@ -27,34 +27,35 @@ int main(void) {
 
   for (;;) {
     printf("Choose an operation(one of + * - /): ");
-    if (scanf("%c", &op) == EOF) {
+    if (scanf(" %c", &op) == EOF) {
       fprintf(stderr, "encountered end-of-file\n");
       return 1;
     }
-    printf(" ------- %c", op);
 
     if (!strchr("+-/*", op)) {
-      fprintf(stderr, "invalid operation: %c %d\n", op, op);
+      fprintf(stderr, "invalid operation: %c \n", op);
       return 1;
     }
 
-    if (!read("Enter a: ", &a)) return 1;
-    if (!read("Enter b: ", &b)) return 1;
+    if (!read("Enter a: ", &a))
+      return 1;
+    if (!read("Enter b: ", &b))
+      return 1;
 
     if (op == '+') {
       res = a + b;
     } else if (op == '-') {
-      res = a -b;
+      res = a - b;
     } else if (op == '*') {
       res = a * b;
     } else if (op == '/') {
       if (b == 0) {
         fprintf(stderr, "cannot divide by 0\n");
-        return 1;
+        continue;
       }
 
       res = a / b;
-    } 
+    }
 
     printf("The value of %d %c %d is: %d\n", a, op, b, res);
   }
