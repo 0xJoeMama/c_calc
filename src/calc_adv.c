@@ -14,7 +14,6 @@ static bool read(const char *message, int *x) {
     return false;
   }
 
-  fflush(stdout);
   return true;
 }
 
@@ -42,19 +41,24 @@ int main(void) {
     if (!read("Enter b: ", &b))
       return 1;
 
-    if (op == '+') {
+    switch (op) {
+    case '+':
       res = a + b;
-    } else if (op == '-') {
+      break;
+    case '-':
       res = a - b;
-    } else if (op == '*') {
+      break;
+    case '*':
       res = a * b;
-    } else if (op == '/') {
+      break;
+    case '/':
       if (b == 0) {
         fprintf(stderr, "cannot divide by 0\n");
         continue;
       }
 
       res = a / b;
+      break;
     }
 
     printf("The value of %d %c %d is: %d\n", a, op, b, res);
